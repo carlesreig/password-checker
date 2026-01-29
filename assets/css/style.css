@@ -33,7 +33,17 @@ input {
 #strength {
     margin-top: 1rem;
     font-weight: bold;
+    background-color: #e0e0e0;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .ok { color: #22c55e; }
 .bad { color: #ef4444; }
+
+#strength .bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
