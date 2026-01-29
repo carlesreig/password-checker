@@ -1,13 +1,15 @@
 # Password Security Checker
 
-🔐 Eina web per comprovar la seguretat de contrasenyes **localment**.
+🔐 This tool checks password strength locally in your browser.
 
-## Característiques
-- HTML, CSS i JavaScript pur
-- Sense backend
-- Cap contrasenya s'envia ni s'emmagatzema
-- Ideal per educació i demostracions de seguretat
+## Features
+- No passwords are sent or stored (nowhere)
+- Client-side only (HTML/CSS/JS)
+- Open source and auditable
 
-## Demo
-GitHub Pages (després d'activar-lo):
-https://carlesreig.github.io/password-checker/
+## Security
+All checks are performed locally.  
+You can review the source code to verify this.
+
+## Live demo
+👉 https://carlesreig.github.io/password-checker/
