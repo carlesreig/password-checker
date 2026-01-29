@@ -17,6 +17,14 @@ input.addEventListener('input', () => {
     const pwd = input.value;
     results.innerHTML = '';
 
+    // Crear columnes
+    const colTodo = document.createElement('div');
+    colTodo.className = 'rules-column';
+    colTodo.innerHTML = '<h3>TODO</h3>';
+    const colNotTo = document.createElement('div');
+    colNotTo.className = 'rules-column';
+    colNotTo.innerHTML = '<h3>NOT TO</h3>';
+
     const rules = [
         ['Longitud mínima (12)', checks.hasMinLength(pwd)],
         ['Majúscules', checks.hasUppercase(pwd)],
@@ -25,14 +33,37 @@ input.addEventListener('input', () => {
         ['Símbols', checks.hasSymbol(pwd)]
     ];
 
+        const rulesNot = [
+        ['Repetició', checks.hasRepeatedChars(pwd)],
+        ['Paraules conegudes', checks.hasKnownWords(pwd)],
+        ['Seqüència', checks.hasSequentialChars(pwd)],
+        ['Patrons', checks.hasPattern(pwd)]
+    ];
+
+    // Renderitzar regles positives (TODO)
     rules.forEach(([text, ok]) => {
         const p = document.createElement('p');
         p.textContent = (ok ? '✔ ' : '✖ ') + text;
         p.className = ok ? 'ok' : 'bad';
-        results.appendChild(p);
+        colTodo.appendChild(p);
     });
 
-    const entropy = calculateEntropy(pwd);
+    // Renderitzar regles negatives (NOT TO) i calcular penalització
+    let penalty = 0;
+    rulesNot.forEach(([text, found]) => {
+        const ok = !found; // És bo si NO es troba
+        if (found) penalty += 15; // Resta 15 bits per error
+        const p = document.createElement('p');
+        p.textContent = (ok ? '✔ ' : '✖ ') + text;
+        p.className = ok ? 'ok' : 'bad';
+        colNotTo.appendChild(p);
+    });
+
+    results.appendChild(colTodo);
+    results.appendChild(colNotTo);
+
+    let entropy = calculateEntropy(pwd) - penalty;
+    if (entropy < 0) entropy = 0;
     
     const maxEntropy = 100; // Target entropy for 100%
     const percentage = Math.min((entropy / maxEntropy) * 100, 100);

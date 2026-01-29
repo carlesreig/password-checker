@@ -26,6 +26,22 @@ input {
     font-size: 1rem;
 }
 
+#results {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.rules-column {
+    flex: 1;
+}
+
+.rules-column h3 {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    border-bottom: 1px solid #334155;
+    margin-top: 0;
+}
+
 #results p {
     margin: 0.3rem 0;
 }
