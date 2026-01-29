@@ -4,7 +4,14 @@ import { calculateEntropy } from './entropy.js';
 const input = document.getElementById('password');
 const results = document.getElementById('results');
 const strength = document.getElementById('strength');
-const bar = strength.querySelector('.bar');
+
+let bar = strength.querySelector('.bar');
+if (!bar) {
+    strength.innerHTML = ''; // Neteja contingut previ si n'hi ha
+    bar = document.createElement('div');
+    bar.className = 'bar';
+    strength.appendChild(bar);
+}
 
 input.addEventListener('input', () => {
     const pwd = input.value;
