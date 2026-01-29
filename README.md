@@ -10,4 +10,4 @@
 
 ## Demo
 GitHub Pages (després d'activar-lo):
-https://USUARI.github.io/password-checker/
+https://carlesreig.github.io/password-checker/
