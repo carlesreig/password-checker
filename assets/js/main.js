@@ -15,52 +15,26 @@ if (!bar) {
 
 input.addEventListener('input', () => {
     const pwd = input.value;
-    results.innerHTML = '';
+    
+    // Actualitzar regles TO DO
+    updateRule('rule-length', checks.hasMinLength(pwd));
+    updateRule('rule-uppercase', checks.hasUppercase(pwd));
+    updateRule('rule-lowercase', checks.hasLowercase(pwd));
+    updateRule('rule-number', checks.hasNumber(pwd));
+    updateRule('rule-symbol', checks.hasSymbol(pwd));
 
-    // Crear columnes
-    const colTodo = document.createElement('div');
-    colTodo.className = 'rules-column';
-    colTodo.innerHTML = '<h3>TODO</h3>';
-    const colNotTo = document.createElement('div');
-    colNotTo.className = 'rules-column';
-    colNotTo.innerHTML = '<h3>NOT TO</h3>';
-
-    const rules = [
-        ['Longitud mínima (12)', checks.hasMinLength(pwd)],
-        ['Majúscules', checks.hasUppercase(pwd)],
-        ['Minúscules', checks.hasLowercase(pwd)],
-        ['Números', checks.hasNumber(pwd)],
-        ['Símbols', checks.hasSymbol(pwd)]
-    ];
-
-        const rulesNot = [
-        ['Repetició', checks.hasRepeatedChars(pwd)],
-        ['Paraules conegudes', checks.hasKnownWords(pwd)],
-        ['Seqüència', checks.hasSequentialChars(pwd)],
-        ['Patrons', checks.hasPattern(pwd)]
-    ];
-
-    // Renderitzar regles positives (TODO)
-    rules.forEach(([text, ok]) => {
-        const p = document.createElement('p');
-        p.textContent = (ok ? '✔ ' : '✖ ') + text;
-        p.className = ok ? 'ok' : 'bad';
-        colTodo.appendChild(p);
-    });
-
-    // Renderitzar regles negatives (NOT TO) i calcular penalització
+    // Actualitzar regles NOT TO i calcular penalització
     let penalty = 0;
-    rulesNot.forEach(([text, found]) => {
-        const ok = !found; // És bo si NO es troba
-        if (found) penalty += 15; // Resta 15 bits per error
-        const p = document.createElement('p');
-        p.textContent = (ok ? '✔ ' : '✖ ') + text;
-        p.className = ok ? 'ok' : 'bad';
-        colNotTo.appendChild(p);
-    });
+    
+    const checkPenalty = (id, found) => {
+        if (found) penalty += 15;
+        updateRule(id, !found);
+    };
 
-    results.appendChild(colTodo);
-    results.appendChild(colNotTo);
+    checkPenalty('rule-repeat', checks.hasRepeatedChars(pwd));
+    checkPenalty('rule-words', checks.hasKnownWords(pwd));
+    checkPenalty('rule-sequence', checks.hasSequentialChars(pwd));
+    checkPenalty('rule-pattern', checks.hasPattern(pwd));
 
     let entropy = calculateEntropy(pwd) - penalty;
     if (entropy < 0) entropy = 0;
@@ -72,3 +46,12 @@ input.addEventListener('input', () => {
     bar.style.width = `${percentage}%`;
     bar.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
 });
+
+function updateRule(id, isOk) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.className = isOk ? 'ok' : 'bad';
+        const icon = el.querySelector('.icon');
+        if (icon) icon.textContent = isOk ? '✔' : '✖';
+    }
+}
