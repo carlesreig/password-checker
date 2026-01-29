@@ -19,7 +19,8 @@ export function hasSymbol(pwd) {
 }
 
 export function hasRepeatedChars(pwd) {
-    return /(.)\1{2,}/.test(pwd); // 3 caràcters iguals seguits
+    const matches = pwd.match(/(.)\1{2,}/g); // Busca seqüències de 3 o més
+    return matches ? matches.reduce((acc, curr) => acc + curr.length, 0) : 0;
 }
 
 export function hasKnownWords(pwd) {

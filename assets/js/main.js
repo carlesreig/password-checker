@@ -25,9 +25,13 @@ input.addEventListener('input', () => {
 
     // Actualitzar regles NOT TO i calcular penalització
     let penalty = 0;
+    let nextPenalty = 20; // Punts inicials per error
     
     const checkPenalty = (id, found) => {
-        if (found) penalty += 15;
+        if (found) {
+            penalty += nextPenalty;
+            nextPenalty *= 2; // El següent error costarà el doble
+        }
         updateRule(id, !found);
     };
 
