@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: #e5e7eb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background: #020617;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 1rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+}
+
+#results p {
+    margin: 0.3rem 0;
+}
+
+#strength {
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+.ok { color: #22c55e; }
+.bad { color: #ef4444; }

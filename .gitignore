@@ -1,0 +1,9 @@
+*
+!index.html
+!README.md
+!LICENSE
+!.gitignore
+!assets/
+!assets/**
+!data/
+!data/**
