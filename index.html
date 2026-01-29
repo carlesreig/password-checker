@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Password Security Checker</title>
@@ -8,26 +8,26 @@
 </head>
 <body>
     <main class="container">
-        <h1>🔐 Comprovador de Contrasenyes</h1>
-        <p>Aquesta eina comprova la seguretat de la contrasenya <strong>localment</strong>. No s'envia cap dada.</p>
+        <h1>🔐 Password Checker</h1>
+        <p>This tool runs <strong>locally</strong>. No data is sent anywhere.</p>
 
         <input type="password" id="password" placeholder="Introdueix una contrasenya" autocomplete="new-password">
 
         <div id="results">
             <div class="rules-column">
                 <h3>TO DO</h3>
-                <p id="rule-length" class="bad"><span class="icon">✖</span> Longitud mínima (12)</p>
-                <p id="rule-uppercase" class="bad"><span class="icon">✖</span> Majúscules</p>
-                <p id="rule-lowercase" class="bad"><span class="icon">✖</span> Minúscules</p>
-                <p id="rule-number" class="bad"><span class="icon">✖</span> Números</p>
-                <p id="rule-symbol" class="bad"><span class="icon">✖</span> Símbols</p>
+                <p id="rule-length" class="bad"><span class="icon">✖</span> Minimum length (12)</p>
+                <p id="rule-uppercase" class="bad"><span class="icon">✖</span> Uppercase</p>
+                <p id="rule-lowercase" class="bad"><span class="icon">✖</span> Lowercase</p>
+                <p id="rule-number" class="bad"><span class="icon">✖</span> Numbers</p>
+                <p id="rule-symbol" class="bad"><span class="icon">✖</span> Symbols</p>
             </div>
             <div class="rules-column">
                 <h3>NOT TO</h3>
-                <p id="rule-repeat" class="ok"><span class="icon">✔</span> Repetició</p>
-                <p id="rule-words" class="ok"><span class="icon">✔</span> Paraules conegudes</p>
-                <p id="rule-sequence" class="ok"><span class="icon">✔</span> Seqüència</p>
-                <p id="rule-pattern" class="ok"><span class="icon">✔</span> Patrons</p>
+                <p id="rule-repeat" class="ok"><span class="icon">✔</span> Repetition</p>
+                <p id="rule-words" class="ok"><span class="icon">✔</span> Known words</p>
+                <p id="rule-sequence" class="ok"><span class="icon">✔</span> Sequence</p>
+                <p id="rule-pattern" class="ok"><span class="icon">✔</span> Patterns</p>
             </div>
         </div>
         
