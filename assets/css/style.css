@@ -100,13 +100,13 @@ input {
     margin-top: 1rem;
     font-weight: bold;
     background-color: #414141;
-    height: 20px;
-    border-radius: 10px;
+    height: 5px;
+    border-radius: 1px;
     overflow: hidden;
 }
 
 .ok { color: #325391; }
-.bad { color: #fe5b5b; }
+.bad { color: #c24141; }
 
 #strength .bar {
     height: 100%;

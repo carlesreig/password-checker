@@ -85,7 +85,7 @@ input.addEventListener('input', () => {
     if (!warning) {
         warning = document.createElement('div');
         warning.id = 'pwned-warning';
-        warning.style.cssText = 'color: #dc3545; margin-top: 10px; font-weight: bold;';
+        warning.style.cssText = 'color: #ca8a04; margin-top: 10px; font-weight: bold;';
         strength.after(warning);
     }
     warning.textContent = '';
