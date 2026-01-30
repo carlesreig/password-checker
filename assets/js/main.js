@@ -4,6 +4,7 @@ import { calculateEntropy } from './entropy.js';
 const input = document.getElementById('password');
 const results = document.getElementById('results');
 const strength = document.getElementById('strength');
+const toggleBtn = document.getElementById('toggle-password');
 
 let bar = strength.querySelector('.bar');
 if (!bar) {
@@ -12,6 +13,12 @@ if (!bar) {
     bar.className = 'bar';
     strength.appendChild(bar);
 }
+
+toggleBtn.addEventListener('click', () => {
+    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+    input.setAttribute('type', type);
+    toggleBtn.textContent = type === 'password' ? '👁️' : '🙈';
+});
 
 input.addEventListener('input', () => {
     const pwd = input.value;

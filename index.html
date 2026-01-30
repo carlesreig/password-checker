@@ -11,7 +11,10 @@
         <h1>🔐 Password Checker</h1>
         <p>This tool runs <strong>locally</strong>. No data is sent anywhere.</p>
 
-        <input type="password" id="password" placeholder="Type your password here" autocomplete="new-password">
+        <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Type your password here" autocomplete="new-password">
+            <button id="toggle-password" type="button" aria-label="Show password">👁️</button>
+        </div>
 
         <div id="results">
             <div class="rules-column">
