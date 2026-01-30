@@ -56,25 +56,27 @@ input.addEventListener('input', () => {
     checkPenalty('rule-sequence', checks.hasSequentialChars(pwd));
     checkPenalty('rule-pattern', checks.hasPattern(pwd));
 
-    let entropy = calculateEntropy(pwd) - penalty;
+    let baseEntropy = calculateEntropy(pwd) - penalty;
 
-    if (wordCount > 0) {
-        entropy *= 0.2;
-    }
-    
-    // Si s'incompleixen 2 o més regles (o la mateixa repetida), penalització dràstica addicional
-    if (totalIncidents >= 2) {
-        entropy = entropy / 2;
-    }
-    
-    if (entropy < 0) entropy = 0;
-    
-    const maxEntropy = 100; // Target entropy for 100%
-    const percentage = Math.min((entropy / maxEntropy) * 100, 100);
-    const hue = percentage * 1.2; // Map 0-100% to 0-120 hue (Red -> Yellow -> Green)
-    
-    bar.style.width = `${percentage}%`;
-    bar.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+    const updateVisuals = (pwnedCount) => {
+        let entropy = baseEntropy;
+        if (wordCount > 0 || pwnedCount > 0) {
+            entropy *= 0.2;
+        }
+        if (totalIncidents >= 2) {
+            entropy /= 2;
+        }
+        if (entropy < 0) entropy = 0;
+
+        const maxEntropy = 100;
+        const percentage = Math.min((entropy / maxEntropy) * 100, 100);
+        const hue = percentage * 1.2;
+        
+        bar.style.width = `${percentage}%`;
+        bar.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+    };
+
+    updateVisuals(0);
 
     // Comprovació HIBP (Have I Been Pwned)
     clearTimeout(pwnedDebounce);
@@ -90,9 +92,12 @@ input.addEventListener('input', () => {
     if (pwd) {
         pwnedDebounce = setTimeout(async () => {
             const count = await checks.checkPwnedPassword(pwd);
+            if (input.value !== pwd) return;
+
             if (count > 0) {
-                warning.textContent = `⚠️ Aquesta contrasenya ha aparegut en ${count} filtracions de dades!`;
+                warning.textContent = `⚠️ This password has already appeared in ${count} data leaks!`;
             }
+            updateVisuals(count);
         }, 500);
     }
 });
