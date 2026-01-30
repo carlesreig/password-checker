@@ -26,11 +26,13 @@ input.addEventListener('input', () => {
     // Actualitzar regles NOT TO i calcular penalització
     let penalty = 0;
     let nextPenalty = 20; // Punts inicials per error
+    let brokenRules = 0;
     
     const checkPenalty = (id, found) => {
         if (found) {
             penalty += nextPenalty;
             nextPenalty *= 2; // El següent error costarà el doble
+            brokenRules++;
         }
         updateRule(id, !found);
     };
@@ -41,6 +43,12 @@ input.addEventListener('input', () => {
     checkPenalty('rule-pattern', checks.hasPattern(pwd));
 
     let entropy = calculateEntropy(pwd) - penalty;
+    
+    // Si s'incompleixen 2 o més regles, penalització dràstica addicional
+    if (brokenRules >= 2) {
+        entropy = entropy / 2;
+    }
+    
     if (entropy < 0) entropy = 0;
     
     const maxEntropy = 100; // Target entropy for 100%

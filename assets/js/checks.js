@@ -19,7 +19,7 @@ export function hasSymbol(pwd) {
 }
 
 export function hasRepeatedChars(pwd) {
-    const matches = pwd.match(/(.)\1{2,}/g); // Busca seqüències de 3 o més
+    const matches = pwd.match(/(.)\1{2,}|(.{2,})\2+/g); // 3+ chars iguals o patrons repetits (ex: a1a1)
     return matches ? matches.reduce((acc, curr) => acc + curr.length, 0) : 0;
 }
 

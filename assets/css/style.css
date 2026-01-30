@@ -29,6 +29,7 @@ input {
 #results {
     display: flex;
     gap: 1.5rem;
+    margin-top: 2rem;
 }
 
 .rules-column {
@@ -36,10 +37,13 @@ input {
 }
 
 .rules-column h3 {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
+    text-align: center;
     color: #94a3b8;
-    border-bottom: 1px solid #334155;
+    border-bottom: 2px solid #334155;
     margin-top: 0;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
 }
 
 #results p {
