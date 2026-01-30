@@ -38,7 +38,7 @@ input.addEventListener('input', () => {
     };
 
     checkPenalty('rule-repeat', checks.hasRepeatedChars(pwd));
-    checkPenalty('rule-words', checks.hasKnownWords(pwd));
+    checkPenalty('rule-words', checks.hasKnownWords(pwd) || checks.isCommonPassword(pwd));
     checkPenalty('rule-sequence', checks.hasSequentialChars(pwd));
     checkPenalty('rule-pattern', checks.hasPattern(pwd));
 

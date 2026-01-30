@@ -1,3 +1,15 @@
+let commonPasswords = new Set();
+
+fetch('data/common-passwords.json')
+  .then(r => r.json())
+  .then(list => {
+    commonPasswords = new Set(list.map(p => p.toLowerCase()));
+  });
+
+export function isCommonPassword(pwd) {
+  return commonPasswords.has(pwd.toLowerCase());
+}
+
 export function hasMinLength(pwd, min = 12) {
     return pwd.length >= min;
 }
@@ -24,7 +36,7 @@ export function hasRepeatedChars(pwd) {
 }
 
 export function hasKnownWords(pwd) {
-    return /password|admin|123456|qwerty|access/i.test(pwd);
+    return /password|admin|trump|123456|qwerty|access/i.test(pwd);
 }
 
 export function hasSequentialChars(pwd) {
