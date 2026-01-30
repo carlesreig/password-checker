@@ -17,6 +17,12 @@ body {
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
+.icon-lock {
+  width: 28px;
+  height: 28px;
+  color: #2c2c2c;
+}
+
 .password-wrapper {
     position: relative;
     margin-top: 1rem;
