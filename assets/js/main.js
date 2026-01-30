@@ -55,6 +55,7 @@ input.addEventListener('input', () => {
     checkPenalty('rule-words', wordCount);
     checkPenalty('rule-sequence', checks.hasSequentialChars(pwd));
     checkPenalty('rule-pattern', checks.hasPattern(pwd));
+    updateRule('rule-reuse', true); // Reiniciem l'estat visual mentre esperem la comprovació
 
     let baseEntropy = calculateEntropy(pwd) - penalty;
 
@@ -94,6 +95,7 @@ input.addEventListener('input', () => {
             const count = await checks.checkPwnedPassword(pwd);
             if (input.value !== pwd) return;
 
+            updateRule('rule-reuse', count === 0);
             if (count > 0) {
                 warning.textContent = `⚠️ This password has already appeared in ${count} data leaks!`;
             }
