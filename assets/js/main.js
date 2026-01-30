@@ -5,6 +5,7 @@ const input = document.getElementById('password');
 const results = document.getElementById('results');
 const strength = document.getElementById('strength');
 const toggleBtn = document.getElementById('toggle-password');
+let pwnedDebounce;
 
 let bar = strength.querySelector('.bar');
 if (!bar) {
@@ -74,6 +75,26 @@ input.addEventListener('input', () => {
     
     bar.style.width = `${percentage}%`;
     bar.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+
+    // Comprovació HIBP (Have I Been Pwned)
+    clearTimeout(pwnedDebounce);
+    let warning = document.getElementById('pwned-warning');
+    if (!warning) {
+        warning = document.createElement('div');
+        warning.id = 'pwned-warning';
+        warning.style.cssText = 'color: #dc3545; margin-top: 10px; font-weight: bold;';
+        strength.after(warning);
+    }
+    warning.textContent = '';
+
+    if (pwd) {
+        pwnedDebounce = setTimeout(async () => {
+            const count = await checks.checkPwnedPassword(pwd);
+            if (count > 0) {
+                warning.textContent = `⚠️ Aquesta contrasenya ha aparegut en ${count} filtracions de dades!`;
+            }
+        }, 500);
+    }
 });
 
 function updateRule(id, isOk) {

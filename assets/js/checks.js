@@ -47,3 +47,28 @@ export function hasSequentialChars(pwd) {
 export function hasPattern(pwd) {
     return (pwd.match(/asdf|zxcv|qwer|jkl|uiop/gi) || []).length;
 }
+
+export async function checkPwnedPassword(pwd) {
+    if (!pwd) return 0;
+
+    const encoder = new TextEncoder();
+    const data = encoder.encode(pwd);
+    const hashBuffer = await crypto.subtle.digest('SHA-1', data);
+    const hashHex = Array.from(new Uint8Array(hashBuffer))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('')
+        .toUpperCase();
+
+    const prefix = hashHex.slice(0, 5);
+    const suffix = hashHex.slice(5);
+
+    const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
+    const text = await response.text();
+    
+    const lines = text.split('\n');
+    for (const line of lines) {
+        const [hashSuffix, occurrences] = line.split(':');
+        if (hashSuffix === suffix) return parseInt(occurrences, 10);
+    }
+    return 0;
+}
