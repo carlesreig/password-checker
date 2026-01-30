@@ -5,11 +5,12 @@
 ## Features
 - No passwords are sent or stored (nowhere)
 - Client-side only (HTML/CSS/JS)
-- Open source and auditable
+- Lightweight
+- Outperforms many other tools out there; checks for data leaks, character repetition, sequences and common patterns, known words...
 
 ## Security
-All checks are performed locally.  
-You can review the source code to verify this.
+- All checks are performed locally.
+- Open source and auditable, you can review the source code to verify this.
 
 ## Live demo
 👉 https://carlesreig.github.io/password-checker/
