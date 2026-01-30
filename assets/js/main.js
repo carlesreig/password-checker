@@ -74,7 +74,7 @@ input.addEventListener('input', () => {
         const hue = percentage * 1.2;
         
         bar.style.width = `${percentage}%`;
-        bar.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+        bar.style.backgroundColor = `hsl(${hue}, 50%, 50%)`;
     };
 
     updateVisuals(0);
