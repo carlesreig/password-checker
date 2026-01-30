@@ -8,7 +8,7 @@ fetch('data/common-passwords.json')
 
 export function isCommonPassword(pwd) {
   const p = pwd.toLowerCase();
-  return commonPasswords.some(word => p.includes(word));
+  return commonPasswords.filter(word => p.includes(word)).length;
 }
 
 export function hasMinLength(pwd, min = 12) {
@@ -33,17 +33,17 @@ export function hasSymbol(pwd) {
 
 export function hasRepeatedChars(pwd) {
     const matches = pwd.match(/(.)\1{2,}|(.{2,})\2+/g); // 3+ chars iguals o patrons repetits (ex: a1a1)
-    return matches ? matches.reduce((acc, curr) => acc + curr.length, 0) : 0;
+    return matches ? matches.length : 0;
 }
 
 export function hasKnownWords(pwd) {
-    return /password|admin|trump|123456|qwerty|access/i.test(pwd);
+    return (pwd.match(/password|admin|trump|123456|qwerty|access/gi) || []).length;
 }
 
 export function hasSequentialChars(pwd) {
-    return /123|234|345|456|567|678|789|abc|bcd|cde|def|efg/i.test(pwd);
+    return (pwd.match(/123|234|345|456|567|678|789|abc|bcd|cde|def|efg/gi) || []).length;
 }
 
 export function hasPattern(pwd) {
-    return /asdf|zxcv|qwer|jkl|uiop/i.test(pwd);
+    return (pwd.match(/asdf|zxcv|qwer|jkl|uiop/gi) || []).length;
 }

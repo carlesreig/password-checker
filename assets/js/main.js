@@ -33,26 +33,29 @@ input.addEventListener('input', () => {
     // Actualitzar regles NOT TO i calcular penalització
     let penalty = 0;
     let nextPenalty = 20; // Punts inicials per error
-    let brokenRules = 0;
+    let totalIncidents = 0;
     
-    const checkPenalty = (id, found) => {
-        if (found) {
-            penalty += nextPenalty;
-            nextPenalty *= 2; // El següent error costarà el doble
-            brokenRules++;
+    const checkPenalty = (id, count) => {
+        if (count > 0) {
+            // Apliquem penalització per CADA vegada que es trenca la regla
+            for (let i = 0; i < count; i++) {
+                penalty += nextPenalty;
+                nextPenalty *= 2; // El següent error costarà el doble
+                totalIncidents++;
+            }
         }
-        updateRule(id, !found);
+        updateRule(id, count === 0);
     };
 
     checkPenalty('rule-repeat', checks.hasRepeatedChars(pwd));
-    checkPenalty('rule-words', checks.hasKnownWords(pwd) || checks.isCommonPassword(pwd));
+    checkPenalty('rule-words', checks.hasKnownWords(pwd) + checks.isCommonPassword(pwd));
     checkPenalty('rule-sequence', checks.hasSequentialChars(pwd));
     checkPenalty('rule-pattern', checks.hasPattern(pwd));
 
     let entropy = calculateEntropy(pwd) - penalty;
     
-    // Si s'incompleixen 2 o més regles, penalització dràstica addicional
-    if (brokenRules >= 2) {
+    // Si s'incompleixen 2 o més regles (o la mateixa repetida), penalització dràstica addicional
+    if (totalIncidents >= 2) {
         entropy = entropy / 2;
     }
     
