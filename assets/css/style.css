@@ -31,12 +31,21 @@ body {
 }
 
 a {
-    color: #e5e7eb;
+    color: #94a3b8;
     text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;}
+    text-decoration: underline;
+}
+
+h1 {
+    text-align: center;
+}
+
+.resum {
+    color: #94a3b8;
+}
 
 .password-wrapper {
     position: relative;
