@@ -48,11 +48,16 @@ input.addEventListener('input', () => {
     };
 
     checkPenalty('rule-repeat', checks.hasRepeatedChars(pwd));
-    checkPenalty('rule-words', checks.hasKnownWords(pwd) + checks.isCommonPassword(pwd));
+    const wordCount = checks.hasKnownWords(pwd) + checks.isCommonPassword(pwd);
+    checkPenalty('rule-words', wordCount);
     checkPenalty('rule-sequence', checks.hasSequentialChars(pwd));
     checkPenalty('rule-pattern', checks.hasPattern(pwd));
 
     let entropy = calculateEntropy(pwd) - penalty;
+
+    if (wordCount > 0) {
+        entropy *= 0.2;
+    }
     
     // Si s'incompleixen 2 o més regles (o la mateixa repetida), penalització dràstica addicional
     if (totalIncidents >= 2) {
