@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Password Security Checker v1.1</title>
+    <title>Password Security Checker v1.2</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -17,31 +17,40 @@
             stroke-linecap="round"
             stroke-linejoin="round">
             <path d="M7 10V7a5 5 0 0 1 10 0v3"/><rect x="5" y="10" width="14" height="11" rx="2"/><circle cx="12" cy="15" r="1"/>
-            </svg></span> Password Checker
+            </svg></span> <span data-i18n="title">Password Checker</span>
         </h1>
-        <p class="resum">This tool runs <strong>locally</strong>. No data sent anywhere, check out the <a href="https://github.com/carlesreig/password-checker" target="_blank">source code</a>.</p>
+        
+        <div class="lang-wrapper">
+            <select id="language-selector">
+                <option value="ca">Català</option>
+                <option value="es">Español</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+
+        <p class="resum" data-i18n="resum_html">This tool runs <strong>locally</strong>. No data sent anywhere, check out the <a href="https://github.com/carlesreig/password-checker" target="_blank">source code</a>.</p>
 
         <div class="password-wrapper">
-            <input type="password" id="password" placeholder="Type your password here" autocomplete="new-password">
-            <button id="toggle-password" type="button" aria-label="Show password"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+            <input type="password" id="password" placeholder="Type your password here" autocomplete="new-password" data-i18n="placeholder">
+            <button id="toggle-password" type="button" aria-label="Show password" data-i18n="show_password"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
         </div>
 
         <div id="results">
             <div class="rules-column">
-                <h3>TO DO</h3>
-                <p id="rule-length" class="bad"><span class="icon">✖</span> Minimum length (12)</p>
-                <p id="rule-uppercase" class="bad"><span class="icon">✖</span> Uppercase</p>
-                <p id="rule-lowercase" class="bad"><span class="icon">✖</span> Lowercase</p>
-                <p id="rule-number" class="bad"><span class="icon">✖</span> Numbers</p>
-                <p id="rule-symbol" class="bad"><span class="icon">✖</span> Symbols</p>
+                <h3 data-i18n="todo_title">TO DO</h3>
+                <p id="rule-length" class="bad"><span class="icon">✖</span> <span data-i18n="rule_length">Minimum length (12)</span></p>
+                <p id="rule-uppercase" class="bad"><span class="icon">✖</span> <span data-i18n="rule_uppercase">Uppercase</span></p>
+                <p id="rule-lowercase" class="bad"><span class="icon">✖</span> <span data-i18n="rule_lowercase">Lowercase</span></p>
+                <p id="rule-number" class="bad"><span class="icon">✖</span> <span data-i18n="rule_number">Numbers</span></p>
+                <p id="rule-symbol" class="bad"><span class="icon">✖</span> <span data-i18n="rule_symbol">Symbols</span></p>
             </div>
             <div class="rules-column">
-                <h3>NOT TO</h3>
-                <p id="rule-repeat" class="ok"><span class="icon">✔</span> Character repetition</p>
-                <p id="rule-sequence" class="ok"><span class="icon">✔</span> Sequence</p>
-                <p id="rule-pattern" class="ok"><span class="icon">✔</span> Patterns</p>
-                <p id="rule-words" class="ok"><span class="icon">✔</span> Known words</p>
-                <p id="rule-reuse" class="ok"><span class="icon">✔</span> Password reuse</p>
+                <h3 data-i18n="not_to_title">NOT TO</h3>
+                <p id="rule-repeat" class="ok"><span class="icon">✔</span> <span data-i18n="rule_repeat">Character repetition</span></p>
+                <p id="rule-sequence" class="ok"><span class="icon">✔</span> <span data-i18n="rule_sequence">Sequence</span></p>
+                <p id="rule-pattern" class="ok"><span class="icon">✔</span> <span data-i18n="rule_pattern">Patterns</span></p>
+                <p id="rule-words" class="ok"><span class="icon">✔</span> <span data-i18n="rule_words">Known words</span></p>
+                <p id="rule-reuse" class="ok"><span class="icon">✔</span> <span data-i18n="rule_reuse">Password reuse</span></p>
             </div>
         </div>
         

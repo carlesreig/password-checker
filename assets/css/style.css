@@ -15,6 +15,7 @@ body {
     width: 100%;
     max-width: 400px;
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    position: relative;
 }
 
 .icon-lock {
@@ -142,4 +143,19 @@ input {
     #results {
         flex-direction: column;
     }
+}
+
+.lang-wrapper {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+#language-selector {
+    background: #1e293b;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    padding: 0.3rem;
+    border-radius: 4px;
+    cursor: pointer;
 }

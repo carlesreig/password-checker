@@ -1,5 +1,6 @@
 import * as checks from './checks.js';
 import { calculateEntropy } from './entropy.js';
+import { t, setLanguage, initLanguage } from './i18n.js';
 
 const input = document.getElementById('password');
 const results = document.getElementById('results');
@@ -8,6 +9,13 @@ const toggleBtn = document.getElementById('toggle-password');
 let pwnedDebounce;
 
 let bar = strength.querySelector('.bar');
+
+// Inicialitzar idioma
+initLanguage();
+document.getElementById('language-selector').addEventListener('change', (e) => {
+    setLanguage(e.target.value);
+});
+
 if (!bar) {
     strength.innerHTML = ''; // Neteja contingut previ si n'hi ha
     bar = document.createElement('div');
@@ -97,10 +105,25 @@ input.addEventListener('input', () => {
 
             updateRule('rule-reuse', count === 0);
             if (count > 0) {
-                warning.textContent = `⚠️ This password has already appeared in ${count} data leaks!`;
+                warning.textContent = t('pwned_warning').replace('{count}', count);
+            } else {
+                warning.textContent = '';
             }
             updateVisuals(count);
         }, 500);
+    }
+});
+
+// Escoltar canvis d'idioma per actualitzar missatges dinàmics si cal
+document.addEventListener('languageChanged', () => {
+    // Si hi ha un warning actiu, l'actualitzem amb el nou idioma
+    const warning = document.getElementById('pwned-warning');
+    if (warning && warning.textContent !== '') {
+        // Necessitem recuperar el 'count' per tornar a pintar el missatge. 
+        // Com que no guardem l'estat global del count, disparem l'input event manualment
+        // o simplement deixem que l'usuari escrigui. 
+        // Per simplicitat, disparem l'event input:
+        input.dispatchEvent(new Event('input'));
     }
 });
 
