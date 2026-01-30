@@ -1,13 +1,14 @@
-let commonPasswords = new Set();
+let commonPasswords = [];
 
 fetch('data/common-passwords.json')
   .then(r => r.json())
   .then(list => {
-    commonPasswords = new Set(list.map(p => p.toLowerCase()));
+    commonPasswords = list.map(p => p.toLowerCase());
   });
 
 export function isCommonPassword(pwd) {
-  return commonPasswords.has(pwd.toLowerCase());
+  const p = pwd.toLowerCase();
+  return commonPasswords.some(word => p.includes(word));
 }
 
 export function hasMinLength(pwd, min = 12) {
