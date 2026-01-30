@@ -104,3 +104,24 @@ input {
     width: 0%;
     transition: width 0.3s ease, background-color 0.3s ease;
 }
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem;
+    }
+
+    input {
+        font-size: 1.2rem;
+        padding: 1rem;
+        padding-right: 3rem;
+    }
+
+    #toggle-password {
+        font-size: 1.5rem;
+        right: 10px;
+    }
+
+    #results {
+        flex-direction: column;
+    }
+}
