@@ -5,6 +5,7 @@ const input = document.getElementById('password');
 const results = document.getElementById('results');
 const strength = document.getElementById('strength');
 const toggleBtn = document.getElementById('toggle-password');
+let pwnedDebounce;
 
 let bar = strength.querySelector('.bar');
 if (!bar) {
@@ -17,7 +18,9 @@ if (!bar) {
 toggleBtn.addEventListener('click', () => {
     const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
     input.setAttribute('type', type);
-    toggleBtn.textContent = type === 'password' ? '👁️' : '🙈';
+    toggleBtn.innerHTML = type === 'password' 
+        ? `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>` 
+        : `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><line x1="3" y1="21" x2="21" y2="3"/></svg>`;
 });
 
 input.addEventListener('input', () => {
@@ -48,25 +51,57 @@ input.addEventListener('input', () => {
     };
 
     checkPenalty('rule-repeat', checks.hasRepeatedChars(pwd));
-    checkPenalty('rule-words', checks.hasKnownWords(pwd) + checks.isCommonPassword(pwd));
+    const wordCount = checks.hasKnownWords(pwd) + checks.isCommonPassword(pwd);
+    checkPenalty('rule-words', wordCount);
     checkPenalty('rule-sequence', checks.hasSequentialChars(pwd));
     checkPenalty('rule-pattern', checks.hasPattern(pwd));
+    updateRule('rule-reuse', true); // Reiniciem l'estat visual mentre esperem la comprovació
 
-    let entropy = calculateEntropy(pwd) - penalty;
-    
-    // Si s'incompleixen 2 o més regles (o la mateixa repetida), penalització dràstica addicional
-    if (totalIncidents >= 2) {
-        entropy = entropy / 2;
+    let baseEntropy = calculateEntropy(pwd) - penalty;
+
+    const updateVisuals = (pwnedCount) => {
+        let entropy = baseEntropy;
+        if (wordCount > 0 || pwnedCount > 0) {
+            entropy *= 0.2;
+        }
+        if (totalIncidents >= 2) {
+            entropy /= 2;
+        }
+        if (entropy < 0) entropy = 0;
+
+        const maxEntropy = 100;
+        const percentage = Math.min((entropy / maxEntropy) * 100, 100);
+        const hue = percentage * 1.2;
+        
+        bar.style.width = `${percentage}%`;
+        bar.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+    };
+
+    updateVisuals(0);
+
+    // Comprovació HIBP (Have I Been Pwned)
+    clearTimeout(pwnedDebounce);
+    let warning = document.getElementById('pwned-warning');
+    if (!warning) {
+        warning = document.createElement('div');
+        warning.id = 'pwned-warning';
+        warning.style.cssText = 'color: #dc3545; margin-top: 10px; font-weight: bold;';
+        strength.after(warning);
     }
-    
-    if (entropy < 0) entropy = 0;
-    
-    const maxEntropy = 100; // Target entropy for 100%
-    const percentage = Math.min((entropy / maxEntropy) * 100, 100);
-    const hue = percentage * 1.2; // Map 0-100% to 0-120 hue (Red -> Yellow -> Green)
-    
-    bar.style.width = `${percentage}%`;
-    bar.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+    warning.textContent = '';
+
+    if (pwd) {
+        pwnedDebounce = setTimeout(async () => {
+            const count = await checks.checkPwnedPassword(pwd);
+            if (input.value !== pwd) return;
+
+            updateRule('rule-reuse', count === 0);
+            if (count > 0) {
+                warning.textContent = `⚠️ This password has already appeared in ${count} data leaks!`;
+            }
+            updateVisuals(count);
+        }, 500);
+    }
 });
 
 function updateRule(id, isOk) {
