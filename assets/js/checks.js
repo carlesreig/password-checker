@@ -8,7 +8,13 @@ fetch('data/common-passwords.json')
 
 export function isCommonPassword(pwd) {
   const p = pwd.toLowerCase();
-  return commonPasswords.filter(word => p.includes(word)).length;
+  let count = 0;
+  for (const word of commonPasswords) {
+    if (p.includes(word)) {
+      count++;
+    }
+  }
+  return count;
 }
 
 export function hasMinLength(pwd, min = 12) {
