@@ -32,7 +32,7 @@ export function hasSymbol(pwd) {
 }
 
 export function hasRepeatedChars(pwd) {
-    const matches = pwd.match(/(.)\1{2,}|(.{2,})\2+/g); // 3+ chars iguals o patrons repetits (ex: a1a1)
+    const matches = pwd.match(/(.)\1{2,}|(.{2,50})\2+/g); // 3+ chars iguals o patrons repetits (ex: a1a1)
     return matches ? matches.length : 0;
 }
 
