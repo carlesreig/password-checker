@@ -3,7 +3,6 @@ import { calculateEntropy } from './entropy.js';
 import { t, setLanguage, initLanguage } from './i18n.js';
 
 const input = document.getElementById('password');
-const results = document.getElementById('results');
 const strength = document.getElementById('strength');
 const toggleBtn = document.getElementById('toggle-password');
 let pwnedDebounce;
