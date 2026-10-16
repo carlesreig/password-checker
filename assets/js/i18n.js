@@ -16,8 +16,7 @@ const translations = {
         rule_pattern: "Patrons de teclat",
         rule_words: "Paraules conegudes",
         rule_reuse: "Reutilització de contrasenya",
-        pwned_warning: "⚠️ Aquesta contrasenya ha aparegut en {count} filtracions de dades!",
-        pwned_clean: ""
+        pwned_warning: "⚠️ Aquesta contrasenya ha aparegut en {count} filtracions de dades!"
     },
     es: {
         title: "Comprobador de contraseñas",
@@ -36,8 +35,7 @@ const translations = {
         rule_pattern: "Patrones de teclado",
         rule_words: "Palabras conocidas",
         rule_reuse: "Reutilización de contraseña",
-        pwned_warning: "⚠️ ¡Esta contraseña ha aparecido en {count} filtraciones de datos!",
-        pwned_clean: ""
+        pwned_warning: "⚠️ ¡Esta contraseña ha aparecido en {count} filtraciones de datos!"
     },
     en: {
         title: "Password Checker",
@@ -56,8 +54,7 @@ const translations = {
         rule_pattern: "Patterns",
         rule_words: "Known words",
         rule_reuse: "Password reuse",
-        pwned_warning: "⚠️ This password has already appeared in {count} data leaks!",
-        pwned_clean: ""
+        pwned_warning: "⚠️ This password has already appeared in {count} data leaks!"
     }
 };
 
